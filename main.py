@@ -7,13 +7,16 @@ import urllib.request
 def get_soup(url):
     source = urllib.request.urlopen(url).read()
     soup = BeautifulSoup(source, 'html.parser')
+    print(f'Getting soup from {url}')
     return soup
 
 def grab_job_links(soup):
     urls = []
+    print(f'Getting links from soup.')
     for link in soup.find_all('h2', {'class': 'title'}):
         url = 'https://sg.indeed.com' + link.a.get('href')
         urls.append(url)
+    print(f"Got {len(urls)} links")
     return urls
 
 def get_num_of_items(soup):
@@ -21,10 +24,12 @@ def get_num_of_items(soup):
     import re
     item_count = re.search("(\d*,*\d*) jobs", string)
     count = re.sub("[^\d]", "", item_count.group())
-    return count/10
+    return count
 
 def grab_job_info(url):
     soup = get_soup(url)
+    print(f"Getting job info from {url}")
+
     try:
         title = soup.find(name='h1', attrs={'class': "jobsearch-JobInfoHeader-title"}).get_text()
     except:
@@ -58,7 +63,10 @@ def grab_job_info(url):
                 stack.append(word)
         elif desc.lower().find(word.lower())!= -1:
             stack.append(word)
-    return {'title': title, 'company': company, 'stack': stack, 'link': url, 'description': desc}
+
+    job =  {'title': title, 'company': company, 'stack': stack, 'link': url}
+    print("Found", job)
+    return job
 
 def get_all_info(urls):
     data = []
@@ -70,8 +78,8 @@ def get_all_info(urls):
 links = []
 i=0
 
-while i < 30:
-    base_url = f'https://sg.indeed.com/jobs?q=software&l=Singapore&radius=10&sort=date&fromage=14&start={i}'
+while i < 650:
+    base_url = f'https://sg.indeed.com/jobs?q=software+engineer&l=Singapore&radius=10&sort=date&fromage=14&start={i}'
     i+=10
     try:
         soup = get_soup(base_url)
