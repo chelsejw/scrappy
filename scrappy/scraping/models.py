@@ -11,14 +11,18 @@ class Tech(models.Model):
     class Meta:
         ordering = ['name']
 
+
 class Job(models.Model):
     title = models.CharField(max_length=150)
     company = models.CharField(max_length=100, null=True, blank=True)
     link = models.CharField(max_length=250, unique=True)
     stack = models.ManyToManyField(Tech, null=True, blank=True)
-
+    
     class Meta:
         ordering = ['title']
 
-    
-
+    def get_stack(self):
+        stack = []
+        for x in list(self.stack.all()):
+            stack.append(x.name)
+        return stack
