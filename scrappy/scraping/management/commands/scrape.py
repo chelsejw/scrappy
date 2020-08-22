@@ -106,10 +106,10 @@ class Command(BaseCommand):
             print('Getting all job links....')
             links = []
             print('Defined links')
-            i=0
+            i=50
             ('i=0')
 
-            while i < 40:
+            while i < 650:
                 base_url = f'https://sg.indeed.com/jobs?q=software+engineer&l=Singapore&radius=10&sort=date&fromage=14&start={i}'
                 i+=10
                 try:
