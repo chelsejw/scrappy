@@ -11,15 +11,15 @@ Other names: Billboard ___?
 - Django (Python) backend 
 - React front-end 
 
-### To-Dos
+### Tasks
 - ~Create web scr*per to get data from website~
 - ~Add data to database~
 - Display data in table form with a React front-end
 - Filter jobs by tech mentioned
 - Filter jobs by company
+- Add posting date to information parsed
 
-
-### Extras To Do
+### Extras Tasks
 - A Billboard-style stylistics Top 5 Chart for Frontend/Backend technologies
 - Graphs for popularity
 
