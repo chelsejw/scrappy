@@ -18,7 +18,7 @@ Other names: Billboard ___?
 - Filter jobs by tech mentioned
 - Filter jobs by company
 - Add posting date to information parsed
-- Improve keyword matching - use Regex to differentiate between Java vs Javascript, C vs C+ vs C++, Go vs GoLang, etc. 
+- Improve keyword matching - use Regex to differentiate between Java vs Javascript, C vs C# vs C++, Go vs GoLang, etc. 
 
 ### Extras Tasks
 - A Billboard-style stylistics Top 5 Chart for Frontend/Backend technologies
