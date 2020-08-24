@@ -106,12 +106,11 @@ class Command(BaseCommand):
             print('Getting all job links....')
             links = []
             print('Defined links')
-            i=50
+            i=0
             ('i=0')
 
             while i < 650:
                 base_url = f'https://sg.indeed.com/jobs?q=software+engineer&l=Singapore&radius=10&sort=date&fromage=14&start={i}'
-                i+=10
                 try:
                     soup = get_soup(base_url)
                     links += grab_job_links(soup)
@@ -119,6 +118,8 @@ class Command(BaseCommand):
                 except:
                     print('Got some error.')
                     continue
+                i += 10
+
             return links
 
             

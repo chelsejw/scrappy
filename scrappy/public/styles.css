@@ -1,0 +1,33 @@
+body {
+    background-color: rgb(28, 28, 28);
+    color: white;
+}
+
+.stack-btn {
+    display: inline-block;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.stack-popover {
+    font-size: 0.8rem;
+    position: absolute;
+    background-color: rgba(100,100,100,0.8);
+    padding: 5px 10px;
+}
+
+.stack-go {
+    color: #81cfdc
+}
+
+.stack-javascript {
+    color: #efd91d
+}
+
+.stack-nodejs {
+    color: #7ec728;
+}
+
+.stack-react {
+    color: #61dafb
+}

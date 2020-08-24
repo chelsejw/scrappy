@@ -21,6 +21,19 @@ class Job(models.Model):
     class Meta:
         ordering = ['title']
 
+    def serialize(self):
+        stack = []
+        for x in list(self.stack.all()):
+            stack.append(x.name)
+
+        return {
+            "id": self.id,
+            "title": self.title,
+            "company": self.company,
+            "link": self.link,
+            "stack": stack
+        }
+
     def get_stack(self):
         stack = []
         for x in list(self.stack.all()):
