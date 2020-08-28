@@ -2,7 +2,7 @@ import React from 'react'
 
 const Nav = (props) => {
     return (
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <nav className="navbar navbar-expand-lg navbar-dark">
         <a className="navbar-brand" href="#">
           Billboard Tech
         </a>

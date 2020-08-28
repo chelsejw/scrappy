@@ -10,9 +10,10 @@ const TableRow = (props) => {
       <tr>
         <th scope="row">{props.num}</th>
         <td>{props.data.company}</td>
-        <td>{props.data.title}</td>
+        <td>
+          <a href={props.data.link}>{props.data.title}</a>
+        </td>
         <td>{stackButtons.length > 0 ? stackButtons : "-"}</td>
-        <td><a className="text-light" href={props.data.link}>⇱</a></td>
       </tr>
     );
 }
