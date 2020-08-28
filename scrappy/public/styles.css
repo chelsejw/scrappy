@@ -31,3 +31,40 @@ body {
 .stack-react {
     color: #61dafb
 }
+.stack-java {
+    color: #f8981d
+}
+
+.stack-python {
+    color: #f5bd31
+}
+
+.stack-cplusplus {
+    color: #6195cb
+}
+.stack-csharp {
+    color: #986bd0
+}
+
+.stack-c {
+    color: #5967ba
+}
+
+.stack-rails {
+    color: #c60100
+}
+
+.stack-ruby {
+    color: #e61522
+}
+
+.stack-bootstrap {
+    color: #7412f0
+}
+
+.stack-angularjs {
+    color: #d60030
+}
+.stack-postgresql {
+    color: #305d8c
+}
