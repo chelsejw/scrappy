@@ -12,6 +12,9 @@ const StackBtn = (props)=> {
         case "golang":
             name = 'go'
             break;
+        case "c#":
+            name = 'csharp'
+            break;
         default:
             break;
     }
