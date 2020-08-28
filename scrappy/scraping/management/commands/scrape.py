@@ -57,15 +57,21 @@ class Command(BaseCommand):
                     desc = "N/A"
             stack = []
 
-            keywords = ['Python', 'C++', 'Golang', 'Ruby', 'JavaScript', 'React', 'Java', 'Angular', 'Vue', 'SQL', 'GraphQL', 'Mongo', 'Ruby', 'Bootstrap', 'Django', 'Rails', 'Node', 'Firebase']
+            keywords = ['Python', 'Golang', 'Ruby', 'JavaScript', 'React', 'Java', 'Angular', 'C', 'C#', 'C++', 'Vue', 'SQL', 'GraphQL', 'Mongo', 'Ruby', 'Bootstrap', 'Django', 'Rails', 'Node', 'Firebase']
 
             for word in keywords:
                 if word == 'Go':
+                    #Capital G + o followed by 'lang' OR any non-word character (e.g. commas, fullstops) 
                     if re.search("Go(\W|lang)", desc) != None:
                         stack.append("Golang")
                 if word == "Java":
+                    #Capital J + ava followed by anything that's not a word
                     if re.search("Java\W", desc) != None:
                         stack.append("Java")
+                if word == "C":
+                    #capital C followed by a character that is not a +, #, or a word
+                    if re.search("C[^\+#\w]", desc) !=None:
+                        stack.append("C")
                 elif desc.lower().find(word.lower()) != -1:
                     stack.append(word)
 
