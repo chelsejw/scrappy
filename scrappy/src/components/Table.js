@@ -21,7 +21,7 @@ const Table = (props) => {
           </tr>
         </thead>
         <tbody>
-            {rows ? rows : "Loading"}
+            {rows}
         </tbody>
       </table>
     );
