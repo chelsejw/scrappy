@@ -4,13 +4,12 @@ from scraping.models import Job, Tech
 
 
 def home_view(request, *args, **kwargs):
-    last_twenty = Job.objects.all().order_by('-id')
+    qs = Job.all_with_stack();
 
     jobs = []
 
-    for job in last_twenty:
+    for job in qs:
         jobs.append(job.serialize())
-    
 
     data = {
         'response': jobs

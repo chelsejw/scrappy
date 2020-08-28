@@ -21,6 +21,9 @@ class Job(models.Model):
     class Meta:
         ordering = ['title']
 
+    def all_with_stack():
+        return Job.objects.exclude(stack=None)
+
     def serialize(self):
         stack = []
         for x in list(self.stack.all()):
