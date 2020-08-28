@@ -23,8 +23,10 @@ const StackBtn = (props)=> {
         break;
       case "vue":
         icon_name = "vuejs"
+        break;
       case "sql":
         icon_name = "postgresql"
+        break;
       default:
         break;
     }
