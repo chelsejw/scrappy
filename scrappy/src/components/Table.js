@@ -10,20 +10,20 @@ const Table = (props) => {
     })
 
     return (
-      <table className="my-5 table table-dark">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Company</th>
-            <th scope="col">Title</th>
-            <th scope="col">Stack</th>
-            <th scope="col">Link</th>
-          </tr>
-        </thead>
-        <tbody>
-            {rows}
-        </tbody>
-      </table>
+      <div className="table-responsive">
+        <table className="my-5 table table-hover table-dark">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Company</th>
+              <th scope="col">Title</th>
+              <th scope="col">Stack</th>
+              <th scope="col">Link</th>
+            </tr>
+          </thead>
+          <tbody>{rows}</tbody>
+        </table>
+      </div>
     );
 }
 

@@ -12,7 +12,7 @@ const TableRow = (props) => {
         <td>{props.data.company}</td>
         <td>{props.data.title}</td>
         <td>{stackButtons.length > 0 ? stackButtons : "-"}</td>
-        <td><a className="text-light" href={props.data.link}>View Posting</a></td>
+        <td><a className="text-light" href={props.data.link}>⇱</a></td>
       </tr>
     );
 }
