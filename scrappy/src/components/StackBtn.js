@@ -3,29 +3,36 @@ import React from 'react'
 const StackBtn = (props)=> {
 
 
-    let name = props.name.toLowerCase()
+    let icon_name = props.name.toLowerCase()
 
-    switch (name) {
-        case "node":
-            name = 'nodejs'
-            break;
-        case "golang":
-            name = 'go'
-            break;
-        case "c#":
-            name = 'csharp'
-            break;
-        case "angular":
-            name = "angularjs"
-            break;
-        default:
-            break;
+    switch (icon_name) {
+      case "node":
+        icon_name = "nodejs";
+        break;
+      case "golang":
+        icon_name = "go";
+        break;
+      case "c#":
+        icon_name = "csharp";
+        break;
+      case "angular":
+        icon_name = "angularjs";
+        break;
+      case "c++":
+        icon_name = "cplusplus";
+        break;
+      case "vue":
+        icon_name = "vuejs"
+      case "sql":
+        icon_name = "postgresql"
+      default:
+        break;
     }
 
     return (
       <div className={`stack-btn mr-2 mb-1`}>
         <i
-          className={`devicon-${name.toLowerCase()}-plain stack-${name.toLowerCase()}`}
+          className={`devicon-${icon_name}-plain stack-${icon_name}`}
         ></i>
       </div>
     );
