@@ -17,7 +17,7 @@ body {
 }
 
 .stack-go {
-    color: #81cfdc
+    color: #67d1de
 }
 
 .stack-javascript {
@@ -67,4 +67,7 @@ body {
 }
 .stack-postgresql {
     color: #305d8c
+}
+.stack-vuejs {
+	color: #3fb27f
 }
