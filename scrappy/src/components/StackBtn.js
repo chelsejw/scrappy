@@ -15,6 +15,9 @@ const StackBtn = (props)=> {
         case "c#":
             name = 'csharp'
             break;
+        case "angular":
+            name = "angularjs"
+            break;
         default:
             break;
     }
