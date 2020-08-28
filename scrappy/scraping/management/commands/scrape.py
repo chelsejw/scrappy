@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 from bs4 import BeautifulSoup
 import urllib.request
+import re
 from scraping.models import Job, Tech
 
 #specify driver path
@@ -23,7 +24,6 @@ class Command(BaseCommand):
 
         def get_num_of_items(soup):
             string = soup.find(name="div", attrs={'id': 'searchCountPages'}).get_text()
-            import re
             item_count = re.search("(\d*,*\d*) jobs", string)
             count = re.sub("[^\d]", "", item_count.group())
             return count
@@ -57,13 +57,16 @@ class Command(BaseCommand):
                     desc = "N/A"
             stack = []
 
-            keywords = ['Python', 'C++', 'Go', 'Golang', 'Ruby', 'JavaScript', 'React', 'Java', 'Angular', 'Vue', 'SQL', 'GraphQL', 'Mongo', 'Ruby', 'Bootstrap', 'Django', 'Rails', 'Node', 'Firebase']
+            keywords = ['Python', 'C++', 'Golang', 'Ruby', 'JavaScript', 'React', 'Java', 'Angular', 'Vue', 'SQL', 'GraphQL', 'Mongo', 'Ruby', 'Bootstrap', 'Django', 'Rails', 'Node', 'Firebase']
 
             for word in keywords:
-                if word=='Go':
-                    if desc.lower().find(word)!= -1:
-                        stack.append(word)
-                elif desc.lower().find(word.lower())!= -1:
+                if word == 'Go':
+                    if re.search("Go(\W|lang)", desc) != None:
+                        stack.append("Golang")
+                if word == "Java":
+                    if re.search("Java\W", desc) != None:
+                        stack.append("Java")
+                elif desc.lower().find(word.lower()) != -1:
                     stack.append(word)
 
             job =  {'title': title, 'company': company, 'stack': stack, 'link': url}
