@@ -10,7 +10,7 @@ const Table = (props) => {
     })
 
     return (
-      <table className="my-5 table table-striped table-dark">
+      <table className="my-5 table table-dark">
         <thead>
           <tr>
             <th scope="col">#</th>
