@@ -11,7 +11,9 @@ const TableRow = (props) => {
         <th scope="row">{props.num}</th>
         <td>{props.data.company}</td>
         <td>
-          <a href={props.data.link}>{props.data.title}</a>
+          <a target="_blank" href={props.data.link}>
+            {props.data.title}
+          </a>
         </td>
         <td>{stackButtons.length > 0 ? stackButtons : "-"}</td>
       </tr>
