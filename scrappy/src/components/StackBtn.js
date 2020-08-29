@@ -2,10 +2,19 @@ import React from 'react'
 
 const StackBtn = (props)=> {
 
+  //Devicons not supported: Firebase, Flutter, GraphQL
 
     let icon_name = props.name.toLowerCase()
 
     switch (icon_name) {
+      case "mongo":
+        icon_name = "mongodb"
+        break;
+      case ".net":
+        icon_name = "dotnet"
+      case "aws":
+        icon_name = "amazonwebservices"
+        break;
       case "node":
         icon_name = "nodejs";
         break;
