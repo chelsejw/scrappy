@@ -76,6 +76,9 @@ class Command(BaseCommand):
                 if word == '.NET':
                     if re.search(r".NET", desc) != None:
                         stack.append(".NET")
+                if word == 'Rust':
+                    if re.search(r"Rust", desc) != None:
+                        stack.append(".NET")
                 elif desc.lower().find(word.lower()) != -1:
                     stack.append(word)
 
