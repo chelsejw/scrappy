@@ -27,11 +27,12 @@ class Command(BaseCommand):
         #     item_count = re.search("(\d*,*\d*) jobs", string)
         #     count = re.sub("[^\d]", "", item_count.group())
         #     return count
+       
 
         def grab_job_info(url):
             soup = get_soup(url)
             print(f"Getting job info...")
-
+            desc = ""
             try:
                 title = soup.find(name='h1', attrs={'class': "jobsearch-JobInfoHeader-title"}).get_text()
             except:
@@ -57,7 +58,7 @@ class Command(BaseCommand):
                     desc = "N/A"
             stack = []
 
-            keywords = ['Python', 'Golang', 'Ruby', 'JavaScript', 'React', 'Java', 'Angular', 'C', 'C#', 'C++', 'Vue', 'GraphQL', 'Mongo', 'Ruby', 'Bootstrap', 'Django', 'Rails', 'Node', 'Firebase', '.NET', 'AWS', 'Apache', 'Docker', 'JQuery', 'Linux', 'Oracle', 'PHP', 'Redis', 'Rust', 'mySQL', 'PostgreSQL', 'Scala', 'Sass', 'Swift', 'Flutter', 'TypeScript', 'Ubuntu', 'Vagrant', 'Webpack', 'Wordpress', 'Yarn', 'MySQL', 'NoSQL']
+            keywords = ['Python', 'Golang', 'Ruby', 'JavaScript', 'React', 'Java', 'Angular', 'C#', 'C++', 'Vue', 'GraphQL', 'Mongo', 'Ruby', 'Bootstrap', 'Django', 'Rails', 'Node', 'Firebase', '.NET', 'AWS', 'Apache', 'Docker', 'JQuery', 'Linux', 'Oracle', 'PHP', 'Redis', 'Rust', 'MySQL', 'PostgreSQL', 'Scala', 'Sass', 'Swift', 'Flutter', 'TypeScript', 'Ubuntu', 'Vagrant', 'Webpack', 'Wordpress', 'Yarn', 'MySQL', 'NoSQL']
 
             for word in keywords:
                 if word == 'Go':
@@ -81,26 +82,23 @@ class Command(BaseCommand):
             job =  {'title': title, 'company': company, 'stack': stack, 'link': url}
             print("Found", job)
 
-            try:
-                new_job = Job(
-                    link=job['link'],
-                    company=job['company'],
-                    title=job['title']
-                )
-                new_job.save()
+            new_job = Job(
+                link=job['link'],
+                company=job['company'],
+                title=job['title']
+            )
 
-                print('New job is', new_job.serialize())
-                for tech in job['stack']:
-                    try:
-                        new_job.stack.add(Tech.objects.get(name=tech))
-                    except:
-                        continue                
-                
-                print(f"Added {job['title']} from {job['company']}")
+            new_job.save()
+            print("saved new job")
 
-            except:
-                print('Already exists or there was a problem..')
-                return
+            for tech in job['stack']:
+                try:
+                    new_job.stack.add(Tech.objects.get(name=tech))
+                    print(f"Added {tech}")
+                except:
+                    continue                
+            
+            print(f"Added {job['title']} from {job['company']}")
 
             return job
 
@@ -110,7 +108,7 @@ class Command(BaseCommand):
                     grab_job_info(url)
                 except:
                     print(f"Error getting info from {url}")
-                    return
+                    continue
 
         def get_all_job_links():
             print('Getting all job links....')
@@ -136,7 +134,10 @@ class Command(BaseCommand):
         def process():
             print('Beginning the process of scr*ping! This should be legal!')
             links = get_all_job_links()
+            f = open('errors.js', 'a')
             add_all_jobs(links)
 
         process()
+
+
         self.stdout.write( 'job complete' )

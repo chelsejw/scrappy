@@ -22,6 +22,8 @@ const Table = (props) => {
           </thead>
           <tbody>{rows}</tbody>
         </table>
+
+        {props.data.length < 1 && "There is no data."}
       </div>
     );
 }

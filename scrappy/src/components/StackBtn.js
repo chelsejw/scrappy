@@ -6,6 +6,12 @@ const StackBtn = (props)=> {
     let icon_name = props.name.toLowerCase()
 
     switch (icon_name) {
+      case "mongo":
+        icon_name = "mongodb"
+        break;
+      case "aws":
+        icon_name = "amazonwebservices"
+        break;
       case "node":
         icon_name = "nodejs";
         break;
