@@ -22,11 +22,11 @@ class Command(BaseCommand):
             print(f"Got {len(urls)} links")
             return urls
 
-        def get_num_of_items(soup):
-            string = soup.find(name="div", attrs={'id': 'searchCountPages'}).get_text()
-            item_count = re.search("(\d*,*\d*) jobs", string)
-            count = re.sub("[^\d]", "", item_count.group())
-            return count
+        # def get_num_of_items(soup):
+        #     string = soup.find(name="div", attrs={'id': 'searchCountPages'}).get_text()
+        #     item_count = re.search("(\d*,*\d*) jobs", string)
+        #     count = re.sub("[^\d]", "", item_count.group())
+        #     return count
 
         def grab_job_info(url):
             soup = get_soup(url)
@@ -57,21 +57,24 @@ class Command(BaseCommand):
                     desc = "N/A"
             stack = []
 
-            keywords = ['Python', 'Golang', 'Ruby', 'JavaScript', 'React', 'Java', 'Angular', 'C', 'C#', 'C++', 'Vue', 'SQL', 'GraphQL', 'Mongo', 'Ruby', 'Bootstrap', 'Django', 'Rails', 'Node', 'Firebase']
+            keywords = ['Python', 'Golang', 'Ruby', 'JavaScript', 'React', 'Java', 'Angular', 'C', 'C#', 'C++', 'Vue', 'GraphQL', 'Mongo', 'Ruby', 'Bootstrap', 'Django', 'Rails', 'Node', 'Firebase', '.NET', 'AWS', 'Apache', 'Docker', 'JQuery', 'Linux', 'Oracle', 'PHP', 'Redis', 'Rust', 'mySQL', 'PostgreSQL', 'Scala', 'Sass', 'Swift', 'Flutter', 'TypeScript', 'Ubuntu', 'Vagrant', 'Webpack', 'Wordpress', 'Yarn', 'MySQL', 'NoSQL']
 
             for word in keywords:
                 if word == 'Go':
                     #Capital G + o followed by 'lang' OR any non-word character (e.g. commas, fullstops) 
-                    if re.search("Go(\W|lang)", desc) != None:
+                    if re.search(r"Go(\W|lang)", desc) != None:
                         stack.append("Golang")
                 if word == "Java":
                     #Capital J + ava followed by anything that's not a word
-                    if re.search("Java\W", desc) != None:
+                    if re.search(r"Java\W", desc) != None:
                         stack.append("Java")
                 if word == "C":
                     #capital C followed by a character that is not a +, #, or a word
-                    if re.search("C[^\+#\w]", desc) !=None:
+                    if re.search(r"C[^\+#\w]", desc) !=None:
                         stack.append("C")
+                if word == '.NET':
+                    if re.search(r".NET", desc) != None:
+                        stack.append(".NET")
                 elif desc.lower().find(word.lower()) != -1:
                     stack.append(word)
 
@@ -84,11 +87,9 @@ class Command(BaseCommand):
                     company=job['company'],
                     title=job['title']
                 )
-
-                print('New job is', new_job)
-
                 new_job.save()
 
+                print('New job is', new_job.serialize())
                 for tech in job['stack']:
                     try:
                         new_job.stack.add(Tech.objects.get(name=tech))
