@@ -8,6 +8,9 @@ const StackBtn = (props)=> {
     let icon_name = props.name.toLowerCase()
 
     switch (icon_name) {
+      case "express":
+        icon_name = "expressjs"
+        break;
       case "mongo":
         icon_name = "mongodb"
         break;
@@ -34,9 +37,6 @@ const StackBtn = (props)=> {
         break;
       case "vue":
         icon_name = "vuejs"
-        break;
-      case "sql":
-        icon_name = "postgresql"
         break;
       default:
         break;

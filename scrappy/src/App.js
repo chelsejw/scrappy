@@ -4,16 +4,21 @@ import Nav from './components/Nav'
 import RingLoader from 'react-spinners/RingLoader'
 import Table from './components/Table'
 import StackBtn from './components/StackBtn'
+import moment from 'moment'
 
 const App = () => {
-    const [data, setData] = useState([]);
+    const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(true)
     const [failure, setFailure] = useState(false)
+    const [lastUpdate, setLastUpdate] = useState({})
     const [stack, setStack] = useState([])
     useEffect(() => {
         axios.get("/jobs")
         .then((res) => {
-            setData(res.data.response)
+            setJobs(res.data.response.jobs)
+            setLastUpdate(prev => {
+              return {...prev, jobs: res.data.response.last_update}
+            })
             setLoading(false)
         })
         .catch((err) => {
@@ -24,7 +29,10 @@ const App = () => {
 
         axios.get("/tech")
         .then((res) => {
-            setStack(res.data.response)
+            setStack(res.data.response.tech)
+            setLastUpdate(prev => {
+              return {...prev, tech: res.data.response.last_update}
+            })
         })
         .catch((err) => {
           console.log(`Error in axios request for tech`, err)
@@ -32,9 +40,10 @@ const App = () => {
     }, []);
 
     useEffect(()=> {
-        console.log(data)
+        console.log(jobs)
         console.log(stack)
-    }, [data, stack])
+        console.log(lastUpdate)
+    }, [jobs, stack, lastUpdate])
 
     const stackItems = stack.map(item => {
       return <StackBtn name={item}/>
@@ -46,10 +55,13 @@ const App = () => {
         <div className="container">
 
           <h1 className="mt-3 text-center main-header">Tech@SG</h1>
-          <div className="text-center">Supported Technologies as of 29 Aug</div>
-          <div className="mt-3 w-75 mx-auto text-center">{stackItems}</div>
+          <div className="text-center">Supported Technologies as of {moment(lastUpdate.tech).format("DD MMMM YYYY")}</div>
+          <div className="my-3 w-75 mx-auto text-center">{stackItems}</div>
           {!failure && !loading && 
-            <Table data={data} />}
+            (<div>
+              <div className="text-center">Last added jobs: {moment(lastUpdate.jobs).format("DD MMM, h:mm:ss a")}</div>
+              <Table data={jobs} />
+            </div>)}
           {loading && (<div className="my-5">
               <RingLoader
                 css={"margin: 0 auto;"}
