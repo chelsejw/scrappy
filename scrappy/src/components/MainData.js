@@ -11,7 +11,7 @@ const MainData = (props) => {
           {!failure && !loading && 
             (<div>
               <div className="text-center">Last added jobs: {lastUpdate}</div>
-              <Table data={data} />
+              <Table firstIndex={props.firstIndex} data={data} />
             </div>)}
           {loading && (<div className="my-5">
               <RingLoader

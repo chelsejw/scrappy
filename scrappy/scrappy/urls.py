@@ -20,11 +20,11 @@ from rest_framework import routers
 
 
 router = routers.DefaultRouter()
-router.register(r'jobs', views.JobViewSet)
+router.register(r'jobs', views.JobViewSet, basename='Job')
 router.register(r'tech', views.TechViewSet)
 
-
 urlpatterns = [
+    path('hello/', views.home_view),
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))

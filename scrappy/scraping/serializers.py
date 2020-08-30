@@ -10,5 +10,5 @@ class JobSerializer(serializers.HyperlinkedModelSerializer):
 class TechSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Tech
-        fields = ['name', 'created_at']
+        fields = ['id','name', 'created_at']
 

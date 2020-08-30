@@ -8,20 +8,24 @@ class Tech(models.Model):
 
     def __str__(self):
         return self.name
+    def serialize():
+        return {
+            "pk": self.pk,
+            "name": self.name
+        }
 
     class Meta:
         ordering = ['created_at']
     
     def list_all():
         qs = list(Tech.objects.all())
-        names = []
+        items = []
         for obj in qs:
-            names.append(obj.name)
+            items.append(obj.serialize())
         return names
     def last_added():
         qs = Tech.objects.last()
         return qs.created_at
-
 
 class Job(models.Model):
     title = models.CharField(max_length=150)
@@ -51,7 +55,7 @@ class Job(models.Model):
             "company": self.company,
             "link": self.link,
             "stack": self.get_stack(),
-            "created": self.created_at
+            "created_at": self.created_at
         }
 
     def get_stack(self):
