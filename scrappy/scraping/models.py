@@ -31,6 +31,13 @@ class Job(models.Model):
 
     def all_with_stack():
         return Job.objects.exclude(stack=None)
+    
+    def exists(url):
+        qs = Job.objects.filter(link=url)
+        if qs.count() < 1:
+            return False
+        else:
+            return True
 
     def serialize(self):
         return {

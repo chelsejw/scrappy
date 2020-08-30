@@ -30,80 +30,76 @@ class Command(BaseCommand):
        
 
         def grab_job_info(url):
-            soup = get_soup(url)
-            print(f"Getting job info...")
-            desc = ""
-            try:
-                title = soup.find(name='h1', attrs={'class': "jobsearch-JobInfoHeader-title"}).get_text()
-            except:
+            if Job.exists(url):
+                return print("Job already exists")
+            else:
+
+                soup = get_soup(url)
+                print(f"Getting job info...")
+                desc = ""
                 try:
-                    title = soup.find(name='h2', attrs={'class': 'headerBannerTitle'}).get_text()
+                    title = soup.find(name='h1', attrs={'class': "jobsearch-JobInfoHeader-title"}).get_text()
                 except:
-                    title = "N/A"
+                    try:
+                        title = soup.find(name='h2', attrs={'class': 'headerBannerTitle'}).get_text()
+                    except:
+                        title = "N/A"
 
-            try:
-                company_div = soup.find(name='div', attrs={'class': "icl-u-lg-mr--sm icl-u-xs-mr--xs"})
-                company = company_div.find(name='a').get_text()
-            except:
                 try:
-                    company= soup.find(name='div', attrs={'class': "icl-u-lg-mr--sm icl-u-xs-mr--xs"}).get_text()
+                    company_div = soup.find(name='div', attrs={'class': "icl-u-lg-mr--sm icl-u-xs-mr--xs"})
+                    company = company_div.find(name='a').get_text()
                 except:
-                    company = "N/A"
-            try:
-                desc = soup.find(name='div', attrs={'id': 'jobDescriptionText'}).get_text()
-            except:
+                    try:
+                        company= soup.find(name='div', attrs={'class': "icl-u-lg-mr--sm icl-u-xs-mr--xs"}).get_text()
+                    except:
+                        company = "N/A"
                 try:
-                    desc = soup.find(name='div', attrs={'class': 'jobDetail'}).get_text()
+                    desc = soup.find(name='div', attrs={'id': 'jobDescriptionText'}).get_text()
                 except:
-                    desc = "N/A"
-            stack = []
+                    try:
+                        desc = soup.find(name='div', attrs={'class': 'jobDetail'}).get_text()
+                    except:
+                        desc = "N/A"
+                stack = set()
 
-            keywords = Tech.list_all()
+                keywords = Tech.list_all()
 
-            for word in keywords:
-                if word == 'Go':
-                    #Capital G + o followed by 'lang' OR any non-word character (e.g. commas, fullstops) 
-                    if re.search(r"Go(\W|lang)", desc) != None:
-                        stack.append("Golang")
-                if word == "Java":
-                    #Capital J + ava followed by anything that's not a word
-                    if re.search(r"Java\W", desc) != None:
-                        stack.append("Java")
-                if word == "C":
-                    #capital C followed by a character that is not a +, #, or a word
-                    if re.search(r"C[^\+#\w]", desc) !=None:
-                        stack.append("C")
-                if word == '.NET':
-                    if re.search(r".NET", desc) != None:
-                        stack.append(".NET")
-                if word == 'Rust':
-                    if re.search(r"Rust", desc) != None:
-                        stack.append(".NET")
-                elif desc.lower().find(word.lower()) != -1:
-                    stack.append(word)
+                for word in keywords:
+                    if word == 'Golang':
+                        if re.search("Go(\W|lang)", desc) != None: stack.add(word)
+                        #Capital G + o followed by 'lang' OR any non-word character (e.g. commas, fullstops) 
+                    elif word == "Java":
+                        if re.search("Java\W", desc) != None: stack.add(word)
+                        #Capital J + ava followed by anything that's not a word
+                    elif word == "C":
+                        if re.search("\WC[^\+#\w]", desc) !=None: stack.add(word)
+                        #capital C followed by a character that is not a +, #, or a word
+                    elif word == ".NET":
+                        if re.search("\W\.NET", desc) != None: stack.add(word) 
+                        # a ".NET" string that is not preceded by a word (so can be whitespace, punctuation, etc.)
+                    elif word == 'Rust':
+                        if re.search("Rust", desc) != None: stack.add(word) 
+                    else:
+                        if desc.lower().find(word.lower()) != -1: stack.add(word)
 
-            job =  {'title': title, 'company': company, 'stack': stack, 'link': url}
-            print("Found", job)
+                job =  {'title': title, 'company': company, 'stack': stack, 'link': url}
+                print("Found", job)
 
-            new_job = Job(
-                link=job['link'],
-                company=job['company'],
-                title=job['title']
-            )
+                new_job = Job(
+                    link=job['link'],
+                    company=job['company'],
+                    title=job['title']
+                )
+                
+                new_job.save()
+                print("saved new job")
 
-            new_job.save()
-            print("saved new job")
-
-            for tech in job['stack']:
-                try:
+                for tech in job['stack']:
                     new_job.stack.add(Tech.objects.get(name=tech))
-                    print(f"Added {tech}")
-                except:
-                    continue                
-            
-            print(f"Added {job['title']} from {job['company']}")
+                
+                print(f"Added {job['title']} from {job['company']}")
 
-            return job
+                return job
 
         def add_all_jobs(urls):
             for url in urls:
@@ -118,8 +114,6 @@ class Command(BaseCommand):
             links = []
             print('Defined links')
             i=0
-            ('i=0')
-
             while i < 650:
                 base_url = f'https://sg.indeed.com/jobs?q=software+engineer&l=Singapore&radius=10&sort=date&fromage=14&start={i}'
                 try:
@@ -141,6 +135,5 @@ class Command(BaseCommand):
             add_all_jobs(links)
 
         process()
-
 
         self.stdout.write( 'job complete' )
