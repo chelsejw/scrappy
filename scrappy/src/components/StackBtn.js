@@ -4,6 +4,7 @@ const StackBtn = (props)=> {
 
   //Devicons not supported: Firebase, Flutter, GraphQL
 
+
     let icon_name = props.name.toLowerCase()
 
     switch (icon_name) {
@@ -12,6 +13,7 @@ const StackBtn = (props)=> {
         break;
       case ".net":
         icon_name = "dotnet"
+        break;
       case "aws":
         icon_name = "amazonwebservices"
         break;

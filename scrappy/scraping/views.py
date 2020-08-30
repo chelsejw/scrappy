@@ -17,5 +17,17 @@ def home_view(request, *args, **kwargs):
 
     return JsonResponse(data, status = 200)
 
+def all_tech(request, *args, **kwargs):
+    qs = list(Tech.objects.all())
+    tech = []
+    for item in qs:
+        tech.append(item.name)
+
+    data = {
+        'response': tech
+    }
+    return JsonResponse(data, status=200)
+
+
     
 # Create your views here.

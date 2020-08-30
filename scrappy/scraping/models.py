@@ -32,7 +32,8 @@ class Job(models.Model):
             "title": self.title,
             "company": self.company,
             "link": self.link,
-            "stack": self.get_stack()
+            "stack": self.get_stack(),
+            "created": self.created_at
         }
 
     def get_stack(self):

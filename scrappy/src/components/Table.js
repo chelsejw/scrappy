@@ -1,11 +1,12 @@
 import React from 'react'
 import TableRow from './TableRow'
+var moment = require('moment'); // require
 
 
 const Table = (props) => {
     const rows = props.data.map((job, index) => {
         return (
-            <TableRow key={job.id} num={index+1} data={job}/>
+            <TableRow key={job.id} created={moment(job.created_at).format("DD/MM/YYYY")} num={index+1} data={job}/>
         )
     })
 
@@ -18,6 +19,8 @@ const Table = (props) => {
               <th scope="col">Company</th>
               <th scope="col">Title</th>
               <th scope="col">Stack</th>
+              <th scope="col">Added</th>
+
             </tr>
           </thead>
           <tbody>{rows}</tbody>

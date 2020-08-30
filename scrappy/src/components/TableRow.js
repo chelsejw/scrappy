@@ -1,5 +1,6 @@
 import React from 'react'
 import StackBtn from './StackBtn'
+
 const TableRow = (props) => {
 
     const stackButtons = props.data.stack.map((tech, i) => {
@@ -16,6 +17,8 @@ const TableRow = (props) => {
           </a>
         </td>
         <td>{stackButtons.length > 0 ? stackButtons : "-"}</td>
+        <td>{props.created}</td>
+
       </tr>
     );
 }

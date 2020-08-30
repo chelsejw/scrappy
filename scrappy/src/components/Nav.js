@@ -4,7 +4,7 @@ const Nav = (props) => {
     return (
       <nav className="navbar navbar-expand-lg navbar-dark">
         <a className="navbar-brand" href="#">
-          Billboard Tech
+          Tech@SG
         </a>
         <button
           className="navbar-toggler"

@@ -15,6 +15,14 @@ nav {
     font-style: italic;
 }
 
+.main-header {
+    font-family: "Source Code Pro", monospace;
+    text-transform: uppercase;
+    font-weight: 900;
+    font-style: italic;
+    color: #d84242;
+}
+
 table thead {
     font-family: 'Source Code Pro', monospace;
     text-transform: uppercase;
@@ -108,14 +116,16 @@ table thead {
 }
 
 .stack-bootstrap {
-    color: #7412f0
+    color: #7412f0;    
 }
 
 .stack-angularjs {
     color: #d60030
 }
 .stack-postgresql {
-    color: #305d8c
+    color: #305d8c;
+    border-radius: 5px;
+    background-color: white;
 }
 .stack-vuejs {
 	color: #3fb27f
@@ -123,4 +133,43 @@ table thead {
 
 .stack-django {
     color:#29a472
+}
+
+.stack-amazonwebservices {
+    color: #f69500
+}
+
+.stack-scala {
+    color: #d8342c
+}
+
+.stack-rust {
+    color: black;
+    background-color: white;
+    border-radius: 100%;
+
+}
+
+.stack-mongodb {
+    color: #14a64e
+}
+
+.stack-webpack {
+    color: #8acff4
+}
+
+.stack-jquery {
+    color: #0b66a8;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.stack-linux {
+    color: black;
+    background-color: white;
+    border-radius: 100%;
+}
+
+.stack-swift {
+    color: #f85321
 }
