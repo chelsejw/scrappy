@@ -13,6 +13,11 @@ nav {
     text-transform: uppercase;
     font-weight: 900;
     font-style: italic;
+    font-size: 1.5rem;
+}
+
+.navbar-dark .navbar-brand:hover {
+    color: grey;
 }
 
 .main-header {
@@ -30,7 +35,11 @@ table thead {
 }
 
 .main-loading-txt {
-    font-size: 2rem;
+    font-size: 2.5rem;
+    font-family: 'Source Code Pro', monospace;
+    color: grey;
+    font-weight: 700;
+    font-style: italic;
 }
 
 .stack-btn {
@@ -60,7 +69,13 @@ table thead {
 }
 
 .table a {
-    color: #d84242
+    color: rgb(177, 177, 177);
+    transition-duration: 0.2s;
+}
+
+.table a:hover {
+    color: #d84242;
+    text-decoration: none;
 }
 
 .posting-link-btn {
