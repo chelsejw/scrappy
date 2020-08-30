@@ -4,6 +4,7 @@ from django.db import models
 
 class Tech(models.Model):
     name = models.CharField(max_length=50)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name
@@ -17,6 +18,11 @@ class Tech(models.Model):
         for obj in qs:
             names.append(obj.name)
         return names
+    
+    def last_added():
+        qs = Tech.objects.last()
+        return qs.created_at
+
 
 class Job(models.Model):
     title = models.CharField(max_length=150)
@@ -54,3 +60,7 @@ class Job(models.Model):
         for x in list(self.stack.all()):
             stack.append(x.name)
         return stack
+    
+    def last_added():
+        qs = Job.objects.last()
+        return qs.created_at
