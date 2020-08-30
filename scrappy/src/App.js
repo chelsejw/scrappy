@@ -4,6 +4,7 @@ import Nav from './components/Nav'
 import RingLoader from 'react-spinners/RingLoader'
 import Table from './components/Table'
 import moment from 'moment'
+import MainData from './components/MainData'
 import SupportedHeader from './components/SupportedHeader'
 const App = () => {
     const [jobs, setJobs] = useState([]);
@@ -52,29 +53,18 @@ const App = () => {
       <div>
         <Nav />
         <div className="container">
+          <SupportedHeader
+            lastUpdate={moment(lastUpdate.tech).format("DD MMMM YYYY")}
+            stack={stack}
+          />
 
-        <SupportedHeader lastUpdate={moment(lastUpdate.tech).format("DD MMMM YYYY")} stack={stack}/>
-
-          {!failure && !loading && 
-            (<div>
-              <div className="text-center">Last added jobs: {moment(lastUpdate.jobs).format("DD MMM, h:mm:ss a")}</div>
-              <Table data={jobs} />
-            </div>)}
-          {loading && (<div className="my-5">
-              <RingLoader
-                css={"margin: 0 auto;"}
-                color={"#d84242"}
-                size={150}
-                loading={loading}
-              />
-              <div className="text-center mt-3">
-                <span className="main-loading-txt">Getting jobs...</span>
-              </div>
-            </div>)}
-
-          {failure && <div className="text-center mt-3">
-                <span className="main-loading-txt">Failed to get jobs.</span>
-              </div>}
+          <MainData
+            loading={loading}
+            failure={failure}
+            lastUpdate={moment(lastUpdate.jobs).format("DD MMM, h:mm:ss a")}
+            data={jobs}
+          />
+          
         </div>
       </div>
     );
