@@ -6,7 +6,7 @@ var moment = require('moment'); // require
 const Table = (props) => {
     const rows = props.data.map((job, index) => {
         return (
-            <TableRow key={job.id} created={moment(job.created_at).format("DD/MM/YYYY")} num={index+1} data={job}/>
+            <TableRow key={job.id} created={moment(job.created_at).format("DD/MM/YYYY")} num={props.firstIndex+index} data={job}/>
         )
     })
 

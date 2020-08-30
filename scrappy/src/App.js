@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Nav from './components/Nav'
-import RingLoader from 'react-spinners/RingLoader'
-import Table from './components/Table'
-import StackBtn from './components/StackBtn'
 import moment from 'moment'
+import Options from './components/Options'
+import MainData from './components/MainData'
+import SupportedHeader from './components/SupportedHeader'
+import Paginator from './components/Paginator'
 
 const App = () => {
     const [jobs, setJobs] = useState([]);
@@ -12,13 +13,36 @@ const App = () => {
     const [failure, setFailure] = useState(false)
     const [lastUpdate, setLastUpdate] = useState({})
     const [stack, setStack] = useState([])
+    const [currentPage, setCurrentPage] = useState(1)
+    const [sort, setSort] = useState("default")
+    const [pagination, setPagination] = useState({})
+    const [company, setCompany] = useState(null)
+    const [queries, setQueries] = useState(null)
+
     useEffect(() => {
-        axios.get("/jobs")
+      let stackUrlString;
+      if (queries && queries.length > 0) {
+        stackUrlString = `&stack=${queries.join("&stack=")}`
+      }
+      let companyUrlString = ""
+      if (company) {
+        companyUrlString = `&company=${company}`
+      }
+        axios.get(`/jobs?page=${currentPage}`)
         .then((res) => {
-            setJobs(res.data.response.jobs)
-            setLastUpdate(prev => {
-              return {...prev, jobs: res.data.response.last_update}
+            console.log(res.data)
+            setJobs(res.data.results);
+            setPagination({
+              count: res.data.count,
+              next: res.data.next,
+              prev: res.data.previous,
             })
+            setLastUpdate((prev) => {
+              return {
+                ...prev,
+                jobs: res.data.results[0].created_at
+              };
+            });
             setLoading(false)
         })
         .catch((err) => {
@@ -29,9 +53,9 @@ const App = () => {
 
         axios.get("/tech")
         .then((res) => {
-            setStack(res.data.response.tech)
+            setStack(res.data)
             setLastUpdate(prev => {
-              return {...prev, tech: res.data.response.last_update}
+              return {...prev, tech: res.data[res.data.length-1].created_at}
             })
         })
         .catch((err) => {
@@ -40,43 +64,80 @@ const App = () => {
     }, []);
 
     useEffect(()=> {
+      let stackUrlString;
+      if (queries && queries.length > 0) {
+        stackUrlString = `&stack=${queries.join("&stack=")}`;
+      }
+      let companyUrlString = "";
+      if (company) {
+        companyUrlString = `&company=${company}`;
+      }
+        axios
+          .get(`/jobs?page=${currentPage}`)
+          .then((res) => {
+            console.log(res.data);
+            setJobs(res.data.results);
+            setPagination({
+              count: res.data.count,
+              next: res.data.next,
+              prev: res.data.previous,
+            });
+            setLastUpdate((prev) => {
+              return {
+                ...prev,
+                jobs: res.data.results[0].created_at,
+              };
+            });
+            setLoading(false);
+          })
+          .catch((err) => {
+            setLoading(false);
+            setFailure(true);
+            console.log(`Error in axios request`, err);
+          });
+
+    }, [currentPage, queries, company, sort])
+
+    useEffect(()=> {
         console.log(jobs)
         console.log(stack)
         console.log(lastUpdate)
     }, [jobs, stack, lastUpdate])
 
-    const stackItems = stack.map(item => {
-      return <StackBtn name={item}/>
-    })
+    const firstItemIndex = (itemsPerPage, currentPage) => {
+      return itemsPerPage*(currentPage-1)+1
+    }
+
 
     return (
       <div>
         <Nav />
         <div className="container">
+          <SupportedHeader
+            lastUpdate={moment(lastUpdate.tech).format("DD MMMM YYYY")}
+            stack={stack}
+          />
+          <Options stack={stack}/>
 
-          <h1 className="mt-3 text-center main-header">Tech@SG</h1>
-          <div className="text-center">Supported Technologies as of {moment(lastUpdate.tech).format("DD MMMM YYYY")}</div>
-          <div className="my-3 w-75 mx-auto text-center">{stackItems}</div>
-          {!failure && !loading && 
-            (<div>
-              <div className="text-center">Last added jobs: {moment(lastUpdate.jobs).format("DD MMM, h:mm:ss a")}</div>
-              <Table data={jobs} />
-            </div>)}
-          {loading && (<div className="my-5">
-              <RingLoader
-                css={"margin: 0 auto;"}
-                color={"#d84242"}
-                size={150}
-                loading={loading}
-              />
-              <div className="text-center mt-3">
-                <span className="main-loading-txt">Getting jobs...</span>
-              </div>
-            </div>)}
+          <Paginator
+            current={currentPage}
+            info={pagination}
+            setPage={setCurrentPage}
+          />
 
-          {failure && <div className="text-center mt-3">
-                <span className="main-loading-txt">Failed to get jobs.</span>
-              </div>}
+          <MainData
+            firstIndex={firstItemIndex(20, currentPage)}
+            loading={loading}
+            failure={failure}
+            lastUpdate={moment(lastUpdate.jobs).format("DD MMM, h:mm:ss a")}
+            data={jobs}
+          />
+
+          <Paginator
+            current={currentPage}
+            info={pagination}
+            setPage={setCurrentPage}
+          />
         </div>
       </div>
     );
