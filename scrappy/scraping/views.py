@@ -1,6 +1,35 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, JsonResponse
 from scraping.models import Job, Tech
+from rest_framework import viewsets
+from rest_framework import permissions
+
+from rest_framework.pagination import PageNumberPagination
+from scraping.serializers import JobSerializer, TechSerializer
+
+
+class JobPagination(PageNumberPagination):
+    page_size = 20
+    page_size_query_param = 'page_size'
+    max_page_size = 100
+    last_page_strings = ('last',)
+
+class JobViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows jobs to be viewed/edited.
+    """
+    queryset = Job.objects.all().order_by('-created_at')
+    serializer_class = JobSerializer
+    pagination_class = JobPagination
+
+class TechViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows jobs to be viewed/edited.
+    """
+    queryset = Tech.objects.all().order_by('-created_at')
+    serializer_class = TechSerializer
+
+
 
 
 def home_view(request, *args, **kwargs):
