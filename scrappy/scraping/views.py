@@ -4,6 +4,8 @@ from scraping.models import Job, Tech
 
 
 def home_view(request, *args, **kwargs):
+
+    print(args)
     qs = Job.all_with_stack();
 
     jobs = []
@@ -11,20 +13,26 @@ def home_view(request, *args, **kwargs):
     for job in qs:
         jobs.append(job.serialize())
 
+    last_update = Job.last_added()
+
     data = {
-        'response': jobs
+        'response': {
+            'jobs': jobs,
+            'last_update': last_update
+        }
     }
 
     return JsonResponse(data, status = 200)
 
-def all_tech(request, *args, **kwargs):
-    qs = list(Tech.objects.all())
-    tech = []
-    for item in qs:
-        tech.append(item.name)
 
+
+def all_tech(request, *args, **kwargs):
+    last_update = Tech.last_added()
     data = {
-        'response': tech
+        'response': {
+            'tech': Tech.list_all(),
+            'last_update': last_update
+        }
     }
     return JsonResponse(data, status=200)
 

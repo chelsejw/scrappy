@@ -10,7 +10,7 @@ class Tech(models.Model):
         return self.name
 
     class Meta:
-        ordering = ['name']
+        ordering = ['created_at']
     
     def list_all():
         qs = list(Tech.objects.all())
@@ -18,7 +18,6 @@ class Tech(models.Model):
         for obj in qs:
             names.append(obj.name)
         return names
-    
     def last_added():
         qs = Tech.objects.last()
         return qs.created_at
@@ -62,5 +61,5 @@ class Job(models.Model):
         return stack
     
     def last_added():
-        qs = Job.objects.last()
+        qs = Job.objects.first()
         return qs.created_at
