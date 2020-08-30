@@ -8,8 +8,7 @@ const SupportedHeader = (props)=> {
     });
 
     return (
-        <div className="my-3">
-        <h1 className="text-center main-header">Tech@SG</h1>
+        <div className="mb-3">
           <div className="text-center">Supported Technologies as of {props.lastUpdate}</div>
           <div className="mt-3 w-75 mx-auto text-center">{stackItems}</div>
         </div>

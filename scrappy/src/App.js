@@ -30,7 +30,6 @@ const App = () => {
       }
         axios.get(`/jobs?page=${currentPage}`)
         .then((res) => {
-            console.log(res.data)
             setJobs(res.data.results);
             setPagination({
               count: res.data.count,
@@ -82,12 +81,6 @@ const App = () => {
               next: res.data.next,
               prev: res.data.previous,
             });
-            setLastUpdate((prev) => {
-              return {
-                ...prev,
-                jobs: res.data.results[0].created_at,
-              };
-            });
             setLoading(false);
           })
           .catch((err) => {
@@ -99,9 +92,6 @@ const App = () => {
     }, [currentPage, queries, company, sort])
 
     useEffect(()=> {
-        console.log(jobs)
-        console.log(stack)
-        console.log(lastUpdate)
     }, [jobs, stack, lastUpdate])
 
     const firstItemIndex = (itemsPerPage, currentPage) => {
@@ -113,11 +103,13 @@ const App = () => {
       <div>
         <Nav />
         <div className="container">
-          <SupportedHeader
+          <h1 className="text-center main-header mb-2">Tech@SG</h1>
+
+          {/* <SupportedHeader
             lastUpdate={moment(lastUpdate.tech).format("DD MMMM YYYY")}
             stack={stack}
-          />
-          <Options stack={stack}/>
+          /> */}
+          <Options stack={stack} />
 
           <Paginator
             current={currentPage}

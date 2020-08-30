@@ -12,7 +12,7 @@ const Table = (props) => {
 
     return (
       <div className="table-responsive">
-        <table className="my-5 table table-dark">
+        <table className="mt-2 table table-dark">
           <thead>
             <tr>
               <th scope="col">#</th>

@@ -10,7 +10,7 @@ const MainData = (props) => {
         <div>
           {!failure && !loading && 
             (<div>
-              <div className="text-center">Last added jobs: {lastUpdate}</div>
+              <div className="text-right last-add-jobs">Last added jobs: {lastUpdate} SGT</div>
               <Table firstIndex={props.firstIndex} data={data} />
             </div>)}
           {loading && (<div className="my-5">

@@ -1,32 +1,40 @@
 import React from 'react'
-
+import PaginatorBtn from './PaginatorBtn'
 const Paginator = (props)=> {
 
     const {next, prev, count} = props.info
     const current = props.current
+    let pageButtons = [];
+
+    let totalPages = Math.ceil(count/20)
+    console.log(totalPages)
+
+    for (let i=current-2; i < current+3; i++) {
+      if (i > 0) {
+        pageButtons.push(
+          <PaginatorBtn
+            current={i == current ? true : false}
+            setPage={props.setPage}
+            num={i}
+            text={i}
+          />
+        );
+      }
+    }
+
+
     return (
       <div className="my-3 text-center">
-        {prev && (
-          <button
-            className="btn btn-success btn-sm"
-            onClick={() => {
-              props.setPage(current - 1);
-            }}
-          >
-            Previous
-          </button>
-        )}
-        {count} Results Current Page: {current}
-        {next && (
-          <button
-            className="btn btn-success btn-sm"
-            onClick={() => {
-              props.setPage(current + 1);
-            }}
-          >
-            Next
-          </button>
-        )}
+      
+        <div className="pg-btns">
+          {prev && (
+            <PaginatorBtn setPage={props.setPage} num={current - 1} text="<" />
+          )}
+          {pageButtons}
+          {next && (
+            <PaginatorBtn setPage={props.setPage} num={current + 1} text=">" />
+          )}
+        </div>
       </div>
     );
 }
