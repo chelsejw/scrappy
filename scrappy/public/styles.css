@@ -185,6 +185,57 @@ table thead {
     border-radius: 100%;
 }
 
+.form-check-label {
+    width:100%;
+    cursor: pointer;
+}
 .stack-swift {
     color: #f85321
+}
+.form-check:hover {
+    background-color: rgb(39, 39, 39);
+}
+.options-container {
+    border: 1px solid white;
+    box-sizing: border-box;
+    padding: 5px 20px 20px 20px;
+}
+
+.opt-headers div {
+    font-family: 'Source Code Pro', monospace;
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+}
+
+.options-items {
+    height: 12vh;
+    font-size: 0.8rem;
+}
+.opt::-webkit-scrollbar {
+    width: 10px;
+}
+.opt::-webkit-scrollbar-track {
+	background: rgb(39, 39, 39);
+}
+.opt::-webkit-scrollbar-thumb {
+	background: white;
+}
+.opt::-webkit-scrollbar-thumb:hover{
+	background: black;
+}
+.opt {
+    max-height: 100%;
+    overflow-y: scroll;
+    padding: 20px;
+}
+
+.opt-sort {
+
+}
+
+.opt-stack {
+}
+
+.opt-companies {
 }

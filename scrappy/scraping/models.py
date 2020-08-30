@@ -15,7 +15,7 @@ class Tech(models.Model):
         }
 
     class Meta:
-        ordering = ['created_at']
+        ordering = ['name']
     
     def list_all():
         qs = list(Tech.objects.all())

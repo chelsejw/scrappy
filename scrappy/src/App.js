@@ -113,12 +113,12 @@ const App = () => {
       <div>
         <Nav />
         <div className="container">
-          <Options />
-
           <SupportedHeader
             lastUpdate={moment(lastUpdate.tech).format("DD MMMM YYYY")}
             stack={stack}
           />
+          <Options stack={stack}/>
+
           <Paginator
             current={currentPage}
             info={pagination}
@@ -131,6 +131,12 @@ const App = () => {
             failure={failure}
             lastUpdate={moment(lastUpdate.jobs).format("DD MMM, h:mm:ss a")}
             data={jobs}
+          />
+
+          <Paginator
+            current={currentPage}
+            info={pagination}
+            setPage={setCurrentPage}
           />
         </div>
       </div>
