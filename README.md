@@ -15,7 +15,7 @@ Other names: Billboard ___?
 - ~Create web scr*per to get data from website~
 - ~Add data to database~
 - ~Display data in table form with a React front-end~
-- Paginate results
+- ~Paginate results~
 - Filter jobs by tech mentioned
 - Filter jobs by company
 - ~~Add posting date to information parsed~~ - __not implementing – won't be able to calculate date posted for listings more than 30 days old as Ind**d uses the "xx days ago" instead of solid dates, and after 30 days it just says "30+ days ago"__
