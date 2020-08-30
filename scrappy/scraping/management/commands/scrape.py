@@ -58,7 +58,7 @@ class Command(BaseCommand):
                     desc = "N/A"
             stack = []
 
-            keywords = ['Python', 'Golang', 'Ruby', 'JavaScript', 'React', 'Java', 'Angular', 'C#', 'C++', 'Vue', 'GraphQL', 'Mongo', 'Ruby', 'Bootstrap', 'Django', 'Rails', 'Node', 'Firebase', '.NET', 'AWS', 'Apache', 'Docker', 'JQuery', 'Linux', 'Oracle', 'PHP', 'Redis', 'Rust', 'MySQL', 'PostgreSQL', 'Scala', 'Sass', 'Swift', 'Flutter', 'TypeScript', 'Ubuntu', 'Vagrant', 'Webpack', 'Wordpress', 'Yarn', 'MySQL', 'NoSQL']
+            keywords = Tech.list_all()
 
             for word in keywords:
                 if word == 'Go':

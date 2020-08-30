@@ -10,7 +10,13 @@ class Tech(models.Model):
 
     class Meta:
         ordering = ['name']
-
+    
+    def list_all():
+        qs = list(Tech.objects.all())
+        names = []
+        for obj in qs:
+            names.append(obj.name)
+        return names
 
 class Job(models.Model):
     title = models.CharField(max_length=150)
